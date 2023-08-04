@@ -32,6 +32,7 @@ public class UnionTest {
         stream1.print("stream1");
 
 
+        //nc -lk
         SingleOutputStreamOperator<Event> stream2 = env.socketTextStream("localhost", 8888).map(
                 data -> {
                     String[] field = data.split(",");
@@ -53,6 +54,7 @@ public class UnionTest {
                     @Override
                     public void processElement(Event event, ProcessFunction<Event, String>.Context context, Collector<String> collector) throws Exception {
                         collector.collect("水位线是： " + context.timerService().currentWatermark());
+
                     }
                 }).print();
 
